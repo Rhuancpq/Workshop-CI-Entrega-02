@@ -10,11 +10,11 @@ frontend-build:
     - yarn
   script:
     - yarn build
-    artifacts:
-      expire_in: 1 hour
-      paths:
-        - build
-        - node_modules/
+  artifacts:
+    expire_in: 1 hour
+    paths:
+      - build
+      - node_modules/
 
 frontend-test:
   stage: frontend-test
