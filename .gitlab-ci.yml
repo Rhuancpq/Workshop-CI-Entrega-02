@@ -1,5 +1,6 @@
 stages:
   - backend-test
+  - backend-build
   - frontend-build
   - frontend-test
 
@@ -35,3 +36,12 @@ backend-test:
     - npm install
   script:
     - npm run unittest
+
+backend-build:
+  stage: backend-build
+  image: node
+  before_script:
+    - cd ./backend
+    - npm install
+  script:
+    - npm run build
