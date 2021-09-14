@@ -1,0 +1,27 @@
+stages:
+  - frontend-build
+  - frontend-test
+
+frontend-build:
+  stage: frontend-build
+  image: node
+  before_script:
+    - cd ./frontend
+    - yarn
+  script:
+    - yarn build
+    artifacts:
+      expire_in: 1 hour
+      paths:
+        - build
+        - node_modules/
+
+frontend-test:
+  stage: frontend-test
+  image: node
+  before_script:
+    - cd ./frontend
+    - yarn
+  script:
+    - CI=true yarn test
+    - echo "Tests passed"
