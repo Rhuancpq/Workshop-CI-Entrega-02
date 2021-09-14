@@ -1,4 +1,5 @@
 stages:
+  - backend-test
   - frontend-build
   - frontend-test
 
@@ -25,3 +26,12 @@ frontend-test:
   script:
     - CI=true yarn test
     - echo "Tests passed"
+
+backend-test:
+  stage: backend-test
+  image: node
+  before_script:
+    - cd ./backend
+    - npm install
+  script:
+    - npm run unittest
