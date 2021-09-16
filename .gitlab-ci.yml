@@ -9,9 +9,9 @@ frontend-build:
   image: node
   before_script:
     - cd ./frontend
-    - yarn
+    - npm install
   script:
-    - yarn build
+    - npm build
   artifacts:
     expire_in: 1 hour
     paths:
@@ -23,9 +23,9 @@ frontend-test:
   image: node
   before_script:
     - cd ./frontend
-    - yarn
+    - npm install
   script:
-    - CI=true yarn test
+    - npm run test
     - echo "Tests passed"
 
 backend-test:
