@@ -20,9 +20,7 @@ frontend-build:
   artifacts:
     expire_in: 1 hour
     paths:
-      - build
-      - node_modules/
-
+      - ./frontend/.next/
 frontend-test:
   stage: frontend-test
   image: node
