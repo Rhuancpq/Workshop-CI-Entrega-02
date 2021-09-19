@@ -1,9 +1,9 @@
 stages:
   - backend-test
   - backend-build
+  - backend-publish
   - frontend-build
   - frontend-test
-  - backend-publish
   - frontend-publish
 
 cache:
@@ -55,7 +55,9 @@ backend-build:
 
 backend-publish:
   stage: backend-publish
-  image: docker:stable-dind
+  image: docker:latest
+  services:
+    - docker:dind
   before_script:
     - cd ./backend
     - docker login -u $DOCKER_USERNAME -p $DOCKER_TOKEN
@@ -67,7 +69,9 @@ backend-publish:
 
 frontend-publish:
   stage: frontend-publish
-  image: docker:stable-dind
+  image: docker:latest
+  services:
+    - docker:dind
   before_script:
     - cd ./frontend
     - docker login -u $DOCKER_USERNAME -p $DOCKER_TOKEN
