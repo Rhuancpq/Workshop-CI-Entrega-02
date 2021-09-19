@@ -3,6 +3,8 @@ stages:
   - backend-build
   - frontend-build
   - frontend-test
+  - backend-publish
+  - frontend-publish
 
 cache:
   paths:
@@ -21,6 +23,7 @@ frontend-build:
     expire_in: 1 hour
     paths:
       - ./frontend/.next/
+
 frontend-test:
   stage: frontend-test
   image: node
@@ -49,3 +52,27 @@ backend-build:
     - npm install
   script:
     - npm run build
+
+backend-publish:
+  stage: backend-publish
+  image: docker:stable-dind
+  before_script:
+    - cd ./backend
+    - docker login -u $DOCKER_USERNAME -p $DOCKER_TOKEN
+  script:
+    - docker build -t $DOCKER_USERNAME/$DOCKER_BACKEND_NAME:latest .
+    - docker push $DOCKER_USERNAME/$DOCKER_BACKEND_NAME:latest
+  after_script:
+    - docker logout
+
+frontend-publish:
+  stage: frontend-publish
+  image: docker:stable-dind
+  before_script:
+    - cd ./frontend
+    - docker login -u $DOCKER_USERNAME -p $DOCKER_TOKEN
+  script:
+    - docker build -t $DOCKER_USERNAME/$DOCKER_FRONTEND_NAME:latest .
+    - docker push $DOCKER_USERNAME/$DOCKER_FRONTEND_NAME:latest
+  after_script:
+    - docker logout
