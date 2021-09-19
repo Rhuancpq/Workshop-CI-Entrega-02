@@ -2,8 +2,8 @@ stages:
   - backend-test
   - backend-build
   - backend-publish
-  - frontend-build
   - frontend-test
+  - frontend-build
   - frontend-publish
 
 cache:
